@@ -16,6 +16,20 @@ class product extends CI_Controller{
         echo "Hello World";
     }
 
+    public function list_category_select(){
+        $input=$this->input->get("q");
+        $this->db->select("category.*");
+        $this->db->from("category");
+        $this->db->where("category.nama LIKE '%$input%'");
+        $this->db->order_by("category.nama","ASC");
+        $qry=$this->db->get();
+        $data=array();
+        foreach ($qry->result() as $key => $row) {
+        $json[] = ['id'=>$row->id, 'text'=>$row->nama];
+        }
+        echo json_encode($json);
+    }
+
     public function add_product(){
         $this->form_validation->set_rules('nama_produk','Nama Produk','required');
         $this->form_validation->set_rules('deskripsi_produk','Deskripsi Produk','required');
