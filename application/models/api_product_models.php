@@ -7,6 +7,13 @@ class api_product_models extends CI_Model{
     parent::__construct();
   }
 
+  public function getDataProduct($id_product){
+    $this->db->select('product.*');
+    $this->db->from('product');
+    $this->db->where('product.id',$id_product);
+    return $this->db->get();
+  }
+
   public function getListProductFront(){
     $this->db->select('product.*');
     $this->db->from('product');

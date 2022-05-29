@@ -27,52 +27,48 @@
 		</div>
 	</nav>
 
-	<main class="col-md-12" style="padding:5px 10px 10px 10px">
-		<div class="row">
-			<div class="col-md-12">
-				<h2>Product</h2>
-			</div>
-			<div class="col-md-12">
-				<div class="row" id="listProductFront">
+	<main class="flex-shrink-0">
+		<div class="col-md-12">
+			<div class="p-3 m-5 border rounded-3">
+				<div class="row">
+					<div class="col-md-4">
+						<img id="imageProduct" width="100%" src="#" />
+					</div>
+					<div class="col-md-8">
+						<div class="col-md-12" id="productName" style="margin:5px">Nama</div>
+						<div class="col-md-12" id="productPrice" style="margin:5px">Harga</div>
+						<div class="col-md-12">
+							<a class="btn btn-outline-secondary" type="button" style="margin:5px;margin-top:20px">Buy
+								Now</a>
+						</div>
+					</div>
 				</div>
+				<h5>Description</h5>
+				<hr>
+				<p id="productDescription"></p>
 			</div>
 		</div>
 	</main>
 
 	<script>
 		$(document).ready(function () {
-			getListProduct()
+			getDataProduct()
 		})
 
-		async function getListProduct() {
+		async function getDataProduct() {
 			await $.ajax({
-				url: "<?php echo base_url()?>api/product/get_product_front",
+				url: "<?php echo base_url()?>api/product/get_data_product",
 				type: "GET",
 				dataType: "JSON",
-				data: {},
+				data: {
+					id_product: "<?php echo $id_product;?>"
+				},
 				success: function (data) {
 					console.log(data)
-					htmls = ''
-					data.forEach((result) => {
-						htmls += '<div class="col-md-3">'
-						htmls += '<div class="card mb-4 rounded-3 shadow-sm">'
-						htmls += '<div class="card-body">'
-						htmls += '<center>'
-						htmls += '<img width="50%" src="' + result.images + '" />'
-						htmls += '<h4>' + result.namaProduk + '</h4>'
-						htmls += '<h5>' + result.harga + '</h5>'
-						htmls += '</center>'
-						htmls += '<ul class="list-unstyled mt-3 mb-4">'
-						htmls += '<li>' + result.descriptionProduk + '</li>'
-						htmls += '<ul>'
-						htmls +=
-							'<a href="<?php echo base_url()?>product/details/' + result.id +
-							'" style="margin-top:15px" class="w-100 btn btn-lg btn-outline-primary">Beli</a>'
-						htmls += '</div>'
-						htmls += '</div>'
-						htmls += '</div>'
-					})
-					$('#listProductFront').html(htmls)
+					$('#imageProduct').attr("src", data.images)
+					$('#productName').html('<h2>' + data.namaProduk + '</h2>')
+					$('#productPrice').html('<h5>' + data.harga + '</h5>')
+					$('#productDescription').html(data.descriptionProduk)
 				}
 			})
 		}

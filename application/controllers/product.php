@@ -18,7 +18,8 @@ class product extends CI_Controller{
         if($id==null){
             redirect(base_url());
         }
-    echo "Hello World";
+        $data['id_product'] = $id;
+        $this->load->view('majoo/details',$data);
     }
     
 }

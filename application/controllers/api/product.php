@@ -15,6 +15,21 @@ class product extends CI_Controller{
     function index(){
         echo "Hello World";
     }
+
+    public function get_data_product(){
+        $id_product = $this->input->get('id_product');
+        $data_product = $this->api_product_models->getDataProduct($id_product);
+        $data = array();
+        foreach($data_product->result() as $result){
+           $data=array(
+                'namaProduk'=>$result->nama,
+                'descriptionProduk'=>$result->deskripsi,
+                'harga'=>$this->rupiah($result->harga),
+                'images'=>base_url().'assets/images/'.$result->images
+            );
+        }
+        echo json_encode($data);
+    }
     
     function get_product_front(){
         $listProduct = $this->api_product_models->getListProductFront();
