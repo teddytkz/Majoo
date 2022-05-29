@@ -36,6 +36,7 @@
 					</div>
 					<div class="col-md-8">
 						<div class="col-md-12" id="productName" style="margin:5px">Nama</div>
+						<div class="col-md-12" id="productCategory" style="margin:5px">Category</div>
 						<div class="col-md-12" id="productPrice" style="margin:5px">Harga</div>
 						<div class="col-md-12">
 							<a class="btn btn-outline-secondary" type="button" style="margin:5px;margin-top:20px">Buy
@@ -67,6 +68,7 @@
 					console.log(data)
 					$('#imageProduct').attr("src", data.images)
 					$('#productName').html('<h2>' + data.namaProduk + '</h2>')
+					$('#productCategory').html('<b>Category : </b>' + data.kategoriProduk)
 					$('#productPrice').html('<h5>' + data.harga + '</h5>')
 					$('#productDescription').html(data.descriptionProduk)
 				}

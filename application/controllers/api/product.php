@@ -150,6 +150,7 @@ class product extends CI_Controller{
             $data=array(
                 'namaProduk'=>$result->nama,
                 'descriptionProduk'=>$result->deskripsi,
+                'kategoriProduk'=>$result->categoryNama,
                 'harga'=>$this->rupiah($result->harga),
                 'images'=>base_url().'assets/images/'.$result->images
             );

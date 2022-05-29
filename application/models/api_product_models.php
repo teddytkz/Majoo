@@ -57,9 +57,10 @@ class api_product_models extends CI_Model{
   }
 
   public function getDataProduct($id_product){
-    $this->db->select('product.*');
+    $this->db->select('product.*,category.nama as categoryNama');
     $this->db->from('product');
     $this->db->where('product.id',$id_product);
+    $this->db->join('category','category.id=product.kategori','left');
     return $this->db->get();
   }
 
