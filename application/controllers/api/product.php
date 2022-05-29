@@ -16,6 +16,36 @@ class product extends CI_Controller{
         echo "Hello World";
     }
 
+    public function add_product(){
+        $this->form_validation->set_rules('nama_produk','Nama Produk','required');
+        $this->form_validation->set_rules('deskripsi_produk','Deskripsi Produk','required');
+        $this->form_validation->set_rules('harga_produk','Harga Produk','required');
+        $this->form_validation->set_rules('kategori_produk','Kategori Produk','required');
+        $this->form_validation->set_rules('image_produk','Image Produk','xss_clean');
+        if($this->form_validation->run()==FALSE){
+            $errors = str_replace('<p>','',validation_errors());
+            $errors = str_replace('</p>','',$errors);
+            echo json_encode(array('code'=>'400','message'=>$errors));
+        }else{
+            $config['upload_path']="./assets/images";
+            $config['allowed_types']='gif|jpg|png';
+            $config['encrypt_name'] = TRUE;
+            $this->load->library('upload',$config);
+            if($this->upload->do_upload("image_produk")){
+                $data = array('upload_data' => $this->upload->data());
+                $image= $data['upload_data']['file_name'];
+                $dataProduk['nama'] = $this->input->post('nama_produk');
+                $dataProduk['deskripsi'] = $this->input->post('deskripsi_produk');
+                $dataProduk['harga'] = $this->input->post('harga_produk');
+                $dataProduk['kategori'] = $this->input->post('kategori_produk');
+                $dataProduk['images'] = $image;
+                $saveProduct = $this->api_product_models->saveProduct($dataProduk);
+                echo json_encode(array('code'=>'200','message'=>'Sukses Tambah Produk'));
+            }else{
+                echo json_encode(array('code'=>'400','message'=>'Image Not Found'));
+            }
+        }
+    }
     public function get_data_product(){
         $id_product = $this->input->get('id_product');
         $data_product = $this->api_product_models->getDataProduct($id_product);
