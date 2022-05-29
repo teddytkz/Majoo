@@ -6,7 +6,8 @@
 					<h5>Product</h5>
 				</div>
 				<div class="card-body">
-					<a href="#" class="btn btn-primary" style="margin:10px">Add Product</a>
+					<a href="<?php echo base_url()?>dashboard/add_product" class="btn btn-primary"
+						style="margin:10px">Add Product</a>
 					<div class="col-md-12">
 						<div class="card">
 							<div class="card-header">

@@ -7,6 +7,11 @@ class api_product_models extends CI_Model{
     parent::__construct();
   }
 
+  public function saveProduct($data){
+    $this->db->insert('product',$data);
+    return true;
+  }
+
   public function getDataProduct($id_product){
     $this->db->select('product.*');
     $this->db->from('product');

@@ -6,13 +6,13 @@ class product extends CI_Controller{
         parent::__construct();
         $this->load->database();
         $this->load->helper(['url', 'language']);
-        $this->load->library(['pagination']);
+        $this->load->library(['pagination','form_validation','session']);
 
         //Models
         $this->load->model('api_product_models');
     }
 
-    function index(){
+    public function index(){
         echo "Hello World";
     }
 
@@ -60,12 +60,13 @@ class product extends CI_Controller{
             }
         }
     }
+
     public function get_data_product(){
         $id_product = $this->input->get('id_product');
         $data_product = $this->api_product_models->getDataProduct($id_product);
         $data = array();
         foreach($data_product->result() as $result){
-           $data=array(
+            $data=array(
                 'namaProduk'=>$result->nama,
                 'descriptionProduk'=>$result->deskripsi,
                 'harga'=>$this->rupiah($result->harga),
