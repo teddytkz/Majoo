@@ -44,5 +44,12 @@ class dashboard extends CI_Controller{
         $this->load->view('dashboard/partial/footer');
     }
 
+    public function add_category(){
+        $data['message']='<div class="alert alert-info" role="alert">'.$this->session->flashdata('message').'</div>';
+        $this->load->view('dashboard/partial/header');
+        $this->load->view('dashboard/category/add');
+        $this->load->view('dashboard/partial/footer');
+    }
+
 
 }

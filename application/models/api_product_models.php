@@ -18,6 +18,11 @@ class api_product_models extends CI_Model{
     return true;
   }
 
+  public function saveCategory($data){
+    $this->db->insert('category',$data);
+    return true;
+  }
+
   public function listCategorySelect($input){
     $this->db->select("category.*");
     $this->db->from("category");

@@ -63,6 +63,21 @@ class product extends CI_Controller{
         }
     }
 
+    public function add_category(){
+        $this->form_validation->set_rules('nama_category','Nama Kategori','required');
+        $this->form_validation->set_rules('deskripsi_category','Deskripsi Kategori','required');
+        if($this->form_validation->run()==FALSE){
+            $errors = str_replace('<p>','',validation_errors());
+            $errors = str_replace('</p>','',$errors);
+            echo json_encode(array('code'=>'400','message'=>$errors));
+        }else{
+            $dataCategory['nama'] = $this->input->post('nama_category');
+            $dataCategory['deskripsi'] = $this->input->post('deskripsi_category');
+            $saveCategory = $this->api_product_models->saveCategory($dataCategory);
+            echo json_encode(array('code'=>'200','message'=>'Sukses Tambah Category'));
+        }
+    }
+
     public function get_data_product(){
         $id_product = $this->input->get('id_product');
         $data_product = $this->api_product_models->getDataProduct($id_product);
