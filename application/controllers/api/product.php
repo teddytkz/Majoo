@@ -18,16 +18,18 @@ class product extends CI_Controller{
 
     public function list_category_select(){
         $input=$this->input->get("q");
-        $this->db->select("category.*");
-        $this->db->from("category");
-        $this->db->where("category.nama LIKE '%$input%'");
-        $this->db->order_by("category.nama","ASC");
-        $qry=$this->db->get();
+        $listCategory = $this->api_product_models->listCategorySelect($input);
         $data=array();
-        foreach ($qry->result() as $key => $row) {
-        $json[] = ['id'=>$row->id, 'text'=>$row->nama];
+        foreach ($listCategory->result() as $key => $row) {
+            $json[] = ['id'=>$row->id, 'text'=>$row->nama];
         }
         echo json_encode($json);
+    }
+
+    public function delete_product(){
+        $idProduct = $this->input->post('id_product');
+        $deleteProduct = $this->api_product_models->deleteProduct($idProduct);
+        echo json_encode(array('code'=>'200','message'=>'Success Delete Product'));
     }
 
     public function add_product(){

@@ -32,6 +32,33 @@
 		getListProduct(1)
 	})
 
+	$(document).on('click', '#btnDeleteProduct', function () {
+		let id_product = $(this).attr('ids')
+		$.ajax({
+			url: "<?php echo base_url()?>api/product/delete_product",
+			type: "POST",
+			dataType: "JSON",
+			data: {
+				id_product: id_product
+			},
+			success: function (data) {
+				swal({
+					title: "Success",
+					text: data.message,
+					icon: "success",
+					buttons: {
+						catch: {
+							text: "Ya",
+							value: "catch",
+						},
+					},
+				}).then(function () {
+					getListProduct(1)
+				})
+			}
+		})
+	})
+
 	async function getListProduct(page) {
 		await $.ajax({
 			url: "<?php echo base_url()?>api/product/get_product",
