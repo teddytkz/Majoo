@@ -59,5 +59,13 @@ class dashboard extends CI_Controller{
         $this->load->view('dashboard/partial/footer');
     }
 
+    public function edit_product($id=null){
+        ($id==null)?redirect(base_url().'dashboard/product'):$data['id'] = $id;
+        $data['message']='<div class="alert alert-info" role="alert">'.$this->session->flashdata('message').'</div>';
+        $this->load->view('dashboard/partial/header',$data);
+        $this->load->view('dashboard/product/edit');
+        $this->load->view('dashboard/partial/footer');
+    }
+
 
 }

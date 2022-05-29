@@ -37,6 +37,18 @@ class product extends CI_Controller{
         echo json_encode($data);
     }
 
+    public function get_data_product_id(){
+        $id = $this->input->post('id');
+        $dataProduct = $this->api_product_models->getDataProduct($id)->row();
+        $data = array(
+            'id'=>$dataProduct->id,
+            'nama'=>$dataProduct->nama,
+            'deskripsi'=>$dataProduct->deskripsi,
+            'harga'=>$dataProduct->harga,
+        );
+        echo json_encode($data);
+    }
+
     public function delete_product(){
         $idProduct = $this->input->post('id_product');
         $deleteProduct = $this->api_product_models->deleteProduct($idProduct);
@@ -92,6 +104,25 @@ class product extends CI_Controller{
             $dataCategory['deskripsi'] = $this->input->post('deskripsi_category');
             $saveCategory = $this->api_product_models->saveCategory($dataCategory);
             echo json_encode(array('code'=>'200','message'=>'Sukses Tambah Category'));
+        }
+    }
+
+    public function update_product(){
+        $this->form_validation->set_rules('nama_produk','Nama Produk','required');
+        $this->form_validation->set_rules('deskripsi_produk','Deskripsi Produk','required');
+        $this->form_validation->set_rules('harga_produk','Harga Produk','required');
+        if($this->form_validation->run()==FALSE){
+            $errors = str_replace('<p>','',validation_errors());
+            $errors = str_replace('</p>','',$errors);
+            echo json_encode(array('code'=>'400','message'=>$errors));
+        }else{
+            $id = $this->input->post('id');
+            $dataProduk['nama'] = $this->input->post('nama_produk');
+            $dataProduk['deskripsi'] = $this->input->post('deskripsi_produk');
+            $dataProduk['harga'] = $this->input->post('harga_produk');
+            $updateProduct = $this->api_product_models->updateProduct($id,$dataProduk);
+            echo json_encode(array('code'=>'200','message'=>'Sukses Update Produk'));
+            
         }
     }
 
@@ -184,7 +215,7 @@ class product extends CI_Controller{
         $no=1;
         foreach($productList->result() as $result){
             $actionDelete = '<a href="#" id="btnDeleteProduct" ids="'.$result->id.'" class="btn btn-warning" style="margin:2px">Delete</a>';
-            $actionEdit = '<a href="'.base_url().'product/edit/'.$result->id.'" class="btn btn-success" style="margin:2px">Edit</a>';
+            $actionEdit = '<a href="'.base_url().'dashboard/edit_product/'.$result->id.'" class="btn btn-success" style="margin:2px">Edit</a>';
             $tableProduct .= '<tr>';
             $tableProduct .= '<td>'.$no++.'</td>';
             $tableProduct .= '<td>'.$result->id.'</td>';

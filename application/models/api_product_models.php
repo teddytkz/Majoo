@@ -7,6 +7,12 @@ class api_product_models extends CI_Model{
     parent::__construct();
   }
 
+  public function updateProduct($id,$data){
+    $this->db->where('id',$id);
+    $this->db->update('product',$data);
+    return true;
+  }
+
   public function updateCategory($id,$data){
     $this->db->where('id',$id);
     $this->db->update('category',$data);
