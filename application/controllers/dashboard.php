@@ -18,36 +18,44 @@ class dashboard extends CI_Controller{
 
     public function index(){
         $data['message']='<div class="alert alert-info" role="alert">'.$this->session->flashdata('message').'</div>';
-        $this->load->view('dashboard/partial/header');
+        $this->load->view('dashboard/partial/header',$data);
         $this->load->view('dashboard/index');
         $this->load->view('dashboard/partial/footer');
     }
 
     public function product(){
         $data['message']='<div class="alert alert-info" role="alert">'.$this->session->flashdata('message').'</div>';
-        $this->load->view('dashboard/partial/header');
+        $this->load->view('dashboard/partial/header',$data);
         $this->load->view('dashboard/product');
         $this->load->view('dashboard/partial/footer');
     }
 
     public function category(){
         $data['message']='<div class="alert alert-info" role="alert">'.$this->session->flashdata('message').'</div>';
-        $this->load->view('dashboard/partial/header');
+        $this->load->view('dashboard/partial/header',$data);
         $this->load->view('dashboard/category');
         $this->load->view('dashboard/partial/footer');
     }
 
     public function add_product(){
         $data['message']='<div class="alert alert-info" role="alert">'.$this->session->flashdata('message').'</div>';
-        $this->load->view('dashboard/partial/header');
+        $this->load->view('dashboard/partial/header',$data);
         $this->load->view('dashboard/product/add');
         $this->load->view('dashboard/partial/footer');
     }
 
     public function add_category(){
         $data['message']='<div class="alert alert-info" role="alert">'.$this->session->flashdata('message').'</div>';
-        $this->load->view('dashboard/partial/header');
+        $this->load->view('dashboard/partial/header',$data);
         $this->load->view('dashboard/category/add');
+        $this->load->view('dashboard/partial/footer');
+    }
+
+    public function edit_category($id=null){
+        ($id==null)?redirect(base_url().'dashboard/category'):$data['id'] = $id;
+        $data['message']='<div class="alert alert-info" role="alert">'.$this->session->flashdata('message').'</div>';
+        $this->load->view('dashboard/partial/header',$data);
+        $this->load->view('dashboard/category/edit');
         $this->load->view('dashboard/partial/footer');
     }
 

@@ -26,6 +26,17 @@ class product extends CI_Controller{
         echo json_encode($json);
     }
 
+    public function get_data_category(){
+        $id = $this->input->post('id');
+        $dataCategory = $this->api_product_models->getDataCategory($id)->row();
+        $data = array(
+            'id'=>$dataCategory->id,
+            'nama'=>$dataCategory->nama,
+            'deskripsi'=>$dataCategory->deskripsi,
+        );
+        echo json_encode($data);
+    }
+
     public function delete_product(){
         $idProduct = $this->input->post('id_product');
         $deleteProduct = $this->api_product_models->deleteProduct($idProduct);
@@ -81,6 +92,22 @@ class product extends CI_Controller{
             $dataCategory['deskripsi'] = $this->input->post('deskripsi_category');
             $saveCategory = $this->api_product_models->saveCategory($dataCategory);
             echo json_encode(array('code'=>'200','message'=>'Sukses Tambah Category'));
+        }
+    }
+
+    public function update_category(){
+        $this->form_validation->set_rules('nama_category','Nama Kategori','required');
+        $this->form_validation->set_rules('deskripsi_category','Deskripsi Kategori','required');
+        if($this->form_validation->run()==FALSE){
+            $errors = str_replace('<p>','',validation_errors());
+            $errors = str_replace('</p>','',$errors);
+            echo json_encode(array('code'=>'400','message'=>$errors));
+        }else{
+            $id = $this->input->post('id');
+            $dataCategory['nama'] = $this->input->post('nama_category');
+            $dataCategory['deskripsi'] = $this->input->post('deskripsi_category');
+            $updateCategory = $this->api_product_models->updateCategory($id,$dataCategory);
+            echo json_encode(array('code'=>'200','message'=>'Sukses Update Category'));
         }
     }
 
@@ -216,7 +243,7 @@ class product extends CI_Controller{
         $no=1;
         foreach($categoryList->result() as $result){
             $actionDelete = '<a href="#" id="btnDeleteCategory" ids="'.$result->id.'" class="btn btn-warning" style="margin:2px">Delete</a>';
-            $actionEdit = '<a href="'.base_url().'product/edit_category/'.$result->id.'" class="btn btn-success" style="margin:2px">Edit</a>';
+            $actionEdit = '<a href="'.base_url().'dashboard/edit_category/'.$result->id.'" class="btn btn-success" style="margin:2px">Edit</a>';
             $tableCategory .= '<tr>';
             $tableCategory .= '<td>'.$no++.'</td>';
             $tableCategory .= '<td>'.$result->id.'</td>';
