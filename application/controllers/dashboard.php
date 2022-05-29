@@ -38,7 +38,7 @@ class dashboard extends CI_Controller{
     }
 
     function add_product(){
-
+        
     }
 
 
