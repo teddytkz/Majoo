@@ -12,24 +12,24 @@ class auth extends CI_Controller{
         $this->load->model('auth_models');
     }
 
-    function index(){
+    public function index(){
         redirect(base_url().'auth/login');
     }
 
-    function login(){
+    public function login(){
         if($this->session->userdata('logged_in')!=null){
             redirect(base_url().'dashboard');
         }
         $this->load->view('auth/login');
     }
 
-    function logout(){
+    public function logout(){
         $this->session->sess_destroy();
         $this->session->set_flashdata('message', 'Success Logout');
         $this->load->view('auth/login');
     }
 
-    function prosesLogin(){
+    public function prosesLogin(){
         $this->form_validation->set_rules('username','Username','required');
         $this->form_validation->set_rules('password','Password','required');
         if($this->form_validation->run()==FALSE){
