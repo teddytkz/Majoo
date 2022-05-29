@@ -32,6 +32,12 @@ class product extends CI_Controller{
         echo json_encode(array('code'=>'200','message'=>'Success Delete Product'));
     }
 
+    public function delete_category(){
+        $idCategory = $this->input->post('id_category');
+        $deleteCategory = $this->api_product_models->deleteCategory($idCategory);
+        echo json_encode(array('code'=>'200','message'=>'Success Delete Category'));
+    }
+
     public function add_product(){
         $this->form_validation->set_rules('nama_produk','Nama Produk','required');
         $this->form_validation->set_rules('deskripsi_produk','Deskripsi Produk','required');

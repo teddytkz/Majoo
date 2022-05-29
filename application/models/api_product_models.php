@@ -13,6 +13,12 @@ class api_product_models extends CI_Model{
     return true;
   }
 
+  public function deleteCategory($id){
+    $this->db->where('id',$id);
+    $this->db->delete('category');
+    return true;
+  }
+
   public function saveProduct($data){
     $this->db->insert('product',$data);
     return true;

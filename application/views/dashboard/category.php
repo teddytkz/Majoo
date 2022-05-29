@@ -35,6 +35,33 @@
 		getListCategory(1)
 	})
 
+	$(document).on('click', '#btnDeleteCategory', function () {
+		let id_category = $(this).attr('ids')
+		$.ajax({
+			url: "<?php echo base_url()?>api/product/delete_category",
+			type: "POST",
+			dataType: "JSON",
+			data: {
+				id_category: id_category
+			},
+			success: function (data) {
+				swal({
+					title: "Success",
+					text: data.message,
+					icon: "success",
+					buttons: {
+						catch: {
+							text: "Ya",
+							value: "catch",
+						},
+					},
+				}).then(function () {
+					getListCategory(1)
+				})
+			}
+		})
+	})
+
 	async function getListCategory(page) {
 		await $.ajax({
 			url: "<?php echo base_url()?>api/product/get_category",
