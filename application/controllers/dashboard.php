@@ -16,29 +16,32 @@ class dashboard extends CI_Controller{
         }
     }
 
-    function index(){
+    public function index(){
         $data['message']='<div class="alert alert-info" role="alert">'.$this->session->flashdata('message').'</div>';
         $this->load->view('dashboard/partial/header');
         $this->load->view('dashboard/index');
         $this->load->view('dashboard/partial/footer');
     }
 
-    function product(){
+    public function product(){
         $data['message']='<div class="alert alert-info" role="alert">'.$this->session->flashdata('message').'</div>';
         $this->load->view('dashboard/partial/header');
         $this->load->view('dashboard/product');
         $this->load->view('dashboard/partial/footer');
     }
 
-    function category(){
+    public function category(){
         $data['message']='<div class="alert alert-info" role="alert">'.$this->session->flashdata('message').'</div>';
         $this->load->view('dashboard/partial/header');
         $this->load->view('dashboard/category');
         $this->load->view('dashboard/partial/footer');
     }
 
-    function add_product(){
-        
+    public function add_product(){
+        $data['message']='<div class="alert alert-info" role="alert">'.$this->session->flashdata('message').'</div>';
+        $this->load->view('dashboard/partial/header');
+        $this->load->view('dashboard/product/add');
+        $this->load->view('dashboard/partial/footer');
     }
 
 
